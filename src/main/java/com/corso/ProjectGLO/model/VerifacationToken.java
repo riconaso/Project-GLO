@@ -16,7 +16,7 @@ import java.time.Instant;
 public class VerifacationToken implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id", nullable = false, updatable = false)
+    @Column(name = "id", nullable = false, updatable = false)
     private long id;
     private String token;
     private Instant dataScadenza;
