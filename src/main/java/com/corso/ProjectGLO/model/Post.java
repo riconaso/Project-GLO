@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,10 +18,11 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Post_Id", updatable = false, nullable = false)
+    @Column(name = "post_Id", updatable = false, nullable = false)
     private long post_id;
 
     @Column(name = "nome_post")
+    @NotBlank(message = "E' richiesto un nome per il post")
     private String nome_post;
 
     @Column(name = "url", nullable = false)

@@ -12,11 +12,11 @@ import java.time.Instant;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name ="verification_tokens")
+@Table(name = "verification_tokens")
 public class VerifacationToken implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, updatable = false)
+    @Column(name = "Id", nullable = false, updatable = false)
     private long id;
     private String token;
     private Instant dataScadenza;
