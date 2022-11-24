@@ -19,7 +19,7 @@ public class Commento implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id", nullable = false, updatable = false)
+    @Column(name = "id", nullable = false, updatable = false)
     private long id;
     @NotEmpty
     private String testo;
