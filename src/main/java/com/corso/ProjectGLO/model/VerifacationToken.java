@@ -12,7 +12,7 @@ import java.time.Instant;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = " verification tokens")
+@Table(name ="verification_tokens")
 public class VerifacationToken implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
