@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table (name="voti")
+@Table (name="votes")
 public class Voto implements Serializable {
 
     @Id
