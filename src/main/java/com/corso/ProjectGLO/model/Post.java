@@ -43,7 +43,7 @@ public class Post {
     @JoinColumn(name = "Utente_FK")
     private Utente utente;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "Subreddit_FK")
-    private Subreddit subreddit;
+    @JoinColumn(name = "Subreddit_FK", referencedColumnName = "id")
+    private SubReddit subreddit;
 
 }
