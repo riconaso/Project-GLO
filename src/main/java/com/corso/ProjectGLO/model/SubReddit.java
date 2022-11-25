@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,11 +19,21 @@ public class SubReddit implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id", nullable = false, updatable = false)
+    @Column(name = "id", nullable = false, updatable = false)
     private long id;
     @NotBlank
     private String nome;
     @NotBlank
     private String descrizione;
     private Instant dataCreazione;
+
+    @OneToMany
+    @JoinColumn(name= "Post_id")
+    private List<Post> posts = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name= "Utente_Fk")
+    private Utente utente;
+
+
 }
