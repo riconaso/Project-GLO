@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.HashSet;
-import java.util.Set;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Data
 @NoArgsConstructor
@@ -18,27 +18,32 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_Id", updatable = false, nullable = false)
-    private long post_id;
+    @Column(name = "post_id", updatable = false, nullable = false)
+    private long postId;
 
-    @Column(name = "nome_post")
-    @NotBlank(message = "E' richiesto un nome per il post")
-    private String nome_post;
+    @Column(name = "post_name")
+    @NotBlank(message = "POST_NAME non può essere vuoto.")
+    private String postName;
 
-    @Column(name = "url", nullable = false)
+    @Column(nullable = false)
     private String url;
 
     @Lob // Un'annotazione Lob specifica che il campo deve essere reso persistente come oggetto di grandi dimensioni.
-    @Column(name = "descrizione", nullable = false)
+    @Column(nullable = false)
     private String descrizione;
 
-    private int contatore_voti;
+    @Column(name = "contatore_voti", nullable = false)
+    private int contatoreVoti;
 
-  //  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
- //   private Set<Commenti> comments = new HashSet<>();
+    // @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    // @JoinColumn
+    // private List<Commento> comments;
 
-
-
-
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "Utente_FK")
+    private Utente utente;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "Subreddit_FK")
+    private Subreddit subreddit;
 
 }
