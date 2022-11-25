@@ -16,6 +16,6 @@ public class Voto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id",nullable = false)
+    @Column(name = "id",nullable = false)
     private long idVoto;
 }
