@@ -13,7 +13,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name ="verification_tokens")
-public class VerifacationToken implements Serializable {
+public class VerificationToken implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
@@ -21,5 +21,8 @@ public class VerifacationToken implements Serializable {
     private String token;
     private Instant dataScadenza;
 
+    @OneToOne
+    @JoinColumn(name = "Utente_Fk")
+    private Utente utente;
 
 }

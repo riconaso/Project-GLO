@@ -25,5 +25,11 @@ public class Commento implements Serializable {
     private String testo;
     private Instant dataCreazione;
 
+    @ManyToOne
+    @JoinColumn(name = "Post_Fk")
+    private Post post;
+    @ManyToOne
+    @JoinColumn(name = "Utente_Fk")
+    private Utente utente;
 
 }
