@@ -1,10 +1,10 @@
-package com.corso.ProjectGLO.repository;
+/* package com.corso.ProjectGLO.repository;
 
 
-import com.corso.ProjectGLO.model.Post;
-import org.springframework.data.jpa.repository.JpaRepository;
+        import com.corso.ProjectGLO.model.Post;
+        import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+        import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
@@ -12,3 +12,4 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findByUser(Utente utente);
 }
+*/
