@@ -35,4 +35,5 @@ public class Utente {
 
     private Instant created;
 
+    private boolean enabled;
 }
