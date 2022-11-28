@@ -1,4 +1,4 @@
-package com.corso.ProjectGLO.controller.exception;
+package com.corso.ProjectGLO.exception;
 
 public class ControllerNotFoundException extends RuntimeException {
 
