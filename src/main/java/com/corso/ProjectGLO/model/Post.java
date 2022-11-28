@@ -6,8 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.Instant;
 
-import static javax.persistence.FetchType.LAZY;
+import org.springframework.lang.Nullable;
 
 @Data
 @NoArgsConstructor
@@ -25,24 +26,24 @@ public class Post {
     @NotBlank(message = "POST_NAME non può essere vuoto.")
     private String postName;
 
-    @Column(nullable = false)
+    @Column
+    @Nullable
     private String url;
 
     @Lob // Un'annotazione Lob specifica che il campo deve essere reso persistente come oggetto di grandi dimensioni.
-    @Column(nullable = false)
+    @Nullable
     private String descrizione;
 
-    @Column(name = "contatore_voti", nullable = false)
-    private int contatoreVoti;
+    @Column(name = "contatore_voti")
+    private int contatoreVoti = 0;
 
-    // @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    // @JoinColumn
-    // private List<Commento> comments;
+    @Column(name = "data_creazione")
+    private Instant dataCreazione;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "Utente_FK")
+    @ManyToOne
+    @JoinColumn(name = "Utente_FK", referencedColumnName = "id_user")
     private Utente utente;
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne
     @JoinColumn(name = "Subreddit_FK", referencedColumnName = "id")
     private SubReddit subreddit;
 
