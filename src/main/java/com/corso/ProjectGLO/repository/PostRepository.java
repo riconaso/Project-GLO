@@ -1,15 +1,17 @@
-/* package com.corso.ProjectGLO.repository;
+package com.corso.ProjectGLO.repository;
 
+import com.corso.ProjectGLO.model.Post;
+import com.corso.ProjectGLO.model.SubReddit;
+import com.corso.ProjectGLO.model.Utente;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-        import com.corso.ProjectGLO.model.Post;
-        import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
-        import java.util.List;
-
+@Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    List<Post> findAllBySubreddit(Subreddit subreddit);
+    List<Post> findAllBySubReddit(SubReddit subreddit);
 
-    List<Post> findByUser(Utente utente);
+    List<Post> findByUtente(Utente utente);
 }
-*/
