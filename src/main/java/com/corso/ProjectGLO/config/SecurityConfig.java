@@ -18,7 +18,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/**")
                 .permitAll()
                 .anyRequest()
-                .authenticated(); // // csrf utiliza i cookie per l'autenticazione
+                .authenticated();
+        // csrf utiliza i cookie per l'autenticazione
         // antMatchers autorizzi le richieste dell'url passato come parametro: da questo pattern, tutte le richieste dopo auth/ vanno bene
     }
 
