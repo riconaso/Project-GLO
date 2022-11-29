@@ -1,6 +1,7 @@
 package com.corso.ProjectGLO.service;
 
 import com.corso.ProjectGLO.dto.RegisterRequest;
+import com.corso.ProjectGLO.model.EmailDiNotifica;
 import com.corso.ProjectGLO.model.Utente;
 import com.corso.ProjectGLO.model.VerificationToken;
 import com.corso.ProjectGLO.repository.UtenteRepository;
@@ -20,6 +21,7 @@ public class AuthService {
     PasswordEncoder passwordEncoder;
     UtenteRepository utenteRepository;
     VerificationTokenRepository verificationTokenRepository;
+    MailService mailService;
 
     @Transactional
     public void signUp(RegisterRequest registerRequest) {
@@ -30,7 +32,13 @@ public class AuthService {
         utente.setCreated(Instant.now());
         utente.setEnabled(false);
         utenteRepository.save(utente);
+        String token = generateVerificationToken(utente);
+        mailService.sendMail(new EmailDiNotifica(
+                "Attiva il tuo account", utente.getEmail(),
+                "Grazie per esserti registrato a GLO, " + token)
+        );
     }
+
 
     private String generateVerificationToken(Utente utente) {
         String token = UUID.randomUUID().toString();
