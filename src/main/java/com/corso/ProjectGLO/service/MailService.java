@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-@Slf4j //Ci permette di utilizzare i log senza crearli
+@Slf4j // è una libreria Java per la gestione dei log in ambiente Java che utilizza LOG4J
 public class MailService {
-    //Iniezione senza Autowired tramite costruttore (AllArgsConstructor)
+
+    // Iniezione senza @Autowired tramite costruttore (AllArgsConstructor)
     private final JavaMailSender mailSender;
     private final MailContentBuilder mailContentBuilder;
 
-    //
     void sendMail(EmailDiNotifica emailDiNotifica){
         MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
@@ -28,7 +28,6 @@ public class MailService {
             mimeMessageHelper.setSubject(emailDiNotifica.getSoggetto());
             mimeMessageHelper.setText(emailDiNotifica.getCorpo());
         };
-
         try {
             mailSender.send(mimeMessagePreparator);
             log.info("Email inviata con successo!");
