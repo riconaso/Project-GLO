@@ -22,7 +22,7 @@ public class AuthService {
     VerificationTokenRepository verificationTokenRepository;
 
     @Transactional
-    public void Signup(RegisterRequest registerRequest) {
+    public void signUp(RegisterRequest registerRequest) {
         Utente utente = new Utente();
         utente.setUsername(registerRequest.getUsername());
         utente.setEmail(registerRequest.getEmail());
