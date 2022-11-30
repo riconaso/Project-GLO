@@ -19,8 +19,11 @@ public class AuthService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
     UtenteRepository utenteRepository;
+    @Autowired
     VerificationTokenRepository verificationTokenRepository;
+    @Autowired
     MailService mailService;
 
     @Transactional
