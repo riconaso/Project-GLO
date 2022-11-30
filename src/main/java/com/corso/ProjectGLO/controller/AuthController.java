@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@AllArgsConstructor
+
 @RequestMapping ("/api/auth")
 public class AuthController {
 
-   private final AuthService authService;
+    @Autowired
+   private  AuthService authService;
 
-     @PostMapping("/signUp")
+   @PostMapping("/signUp")
     public ResponseEntity<String>signUp(@RequestBody RegisterRequest registerRequest){
         authService.signUp(registerRequest);
         return new ResponseEntity<>("Account creato con succeso!", HttpStatus.OK);
