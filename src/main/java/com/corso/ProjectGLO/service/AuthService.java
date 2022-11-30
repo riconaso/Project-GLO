@@ -1,6 +1,7 @@
 package com.corso.ProjectGLO.service;
 
 import com.corso.ProjectGLO.dto.RegisterRequest;
+import com.corso.ProjectGLO.exception.ControllerNotFoundException;
 import com.corso.ProjectGLO.model.EmailDiNotifica;
 import com.corso.ProjectGLO.model.Utente;
 import com.corso.ProjectGLO.model.VerificationToken;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -42,17 +44,25 @@ public class AuthService {
         );
     }
 
-
     private String generateVerificationToken(Utente utente) {
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken();
         verificationToken.setToken(token);
         verificationToken.setUtente(utente);
-
         verificationTokenRepository.save(verificationToken);
         return token;
-        
     }
-
-
+    @Transactional
+    public void verificaAccount(String token) {
+        Optional<VerificationToken> optional = verificationTokenRepository.findByToken(token);
+        optional.orElseThrow(() -> {throw new ControllerNotFoundException("token non trovato");});
+        trovaUserEAbilita(optional.get());
+    }
+    @Transactional
+    public void trovaUserEAbilita(VerificationToken verificationToken) {
+        String username = verificationToken.getUtente().getUsername();
+        Utente utente = utenteRepository.findByUsername(username).orElseThrow(() -> {throw new ControllerNotFoundException(("utente non trovato"));});
+        utente.setEnabled(true);
+        utenteRepository.save(utente);
+    }
 }
