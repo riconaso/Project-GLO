@@ -72,9 +72,9 @@ public class AuthService {
         utenteRepository.save(utente);
     }
 
-    public void login(LoginRequest loignRequest) {
+    public void login(LoginRequest loginRequest) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loignRequest.getUsername(), loignRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
     }
     
