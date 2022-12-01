@@ -40,7 +40,8 @@ public class AuthService {
         String token = generateVerificationToken(utente);
         mailService.sendMail(new EmailDiNotifica(
                 "Attiva il tuo account", utente.getEmail(),
-                "Grazie per esserti registrato a GLO, " + token)
+                "Grazie per esserti registrato a GLO, " + "Per attivare il tuo account clicca sul link" +
+                        "\n" + "http://localhost:8080/api/auth/verification/"+ token)
         );
     }
 
@@ -55,13 +56,13 @@ public class AuthService {
     @Transactional
     public void verificaAccount(String token) {
         Optional<VerificationToken> optional = verificationTokenRepository.findByToken(token);
-        optional.orElseThrow(() -> {throw new ControllerNotFoundException("token non trovato");});
+        optional.orElseThrow(() ->  new ControllerNotFoundException("token non trovato"));
         trovaUserEAbilita(optional.get());
     }
     @Transactional
     public void trovaUserEAbilita(VerificationToken verificationToken) {
         String username = verificationToken.getUtente().getUsername();
-        Utente utente = utenteRepository.findByUsername(username).orElseThrow(() -> {throw new ControllerNotFoundException(("utente non trovato"));});
+        Utente utente = utenteRepository.findByUsername(username).orElseThrow(() ->  new ControllerNotFoundException("utente non trovato"));
         utente.setEnabled(true);
         utenteRepository.save(utente);
     }
