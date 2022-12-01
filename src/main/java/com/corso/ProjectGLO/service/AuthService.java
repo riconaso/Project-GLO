@@ -74,7 +74,7 @@ public class AuthService {
 
     public void login(LoginRequest loignRequest) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loignRequest.getUsername(), loignRequest.getPassword()))
+                new UsernamePasswordAuthenticationToken(loignRequest.getUsername(), loignRequest.getPassword()));
 
     }
     
