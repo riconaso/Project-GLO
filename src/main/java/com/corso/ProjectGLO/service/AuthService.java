@@ -1,5 +1,6 @@
 package com.corso.ProjectGLO.service;
 
+import com.corso.ProjectGLO.dto.LoginRequest;
 import com.corso.ProjectGLO.dto.RegisterRequest;
 import com.corso.ProjectGLO.exception.ControllerNotFoundException;
 import com.corso.ProjectGLO.model.EmailDiNotifica;
@@ -8,6 +9,8 @@ import com.corso.ProjectGLO.model.VerificationToken;
 import com.corso.ProjectGLO.repository.UtenteRepository;
 import com.corso.ProjectGLO.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +30,8 @@ public class AuthService {
     VerificationTokenRepository verificationTokenRepository;
     @Autowired
     MailService mailService;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     @Transactional
     public void signUp(RegisterRequest registerRequest) {
@@ -65,6 +70,12 @@ public class AuthService {
         Utente utente = utenteRepository.findByUsername(username).orElseThrow(() ->  new ControllerNotFoundException("utente non trovato"));
         utente.setEnabled(true);
         utenteRepository.save(utente);
+    }
+
+    public void login(LoginRequest loignRequest) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loignRequest.getUsername(), loignRequest.getPassword()))
+
     }
     
 }
