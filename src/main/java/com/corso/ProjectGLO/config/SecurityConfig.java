@@ -15,14 +15,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf()
-                .disable()
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/auth/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
-        // csrf utiliza i cookie per l'autenticazione
+        // csrf utilizza i cookie per l'autenticazione
         // antMatchers autorizzi le richieste dell'url passato come parametro: da questo pattern, tutte le richieste dopo auth/ vanno bene
     }
 
@@ -32,5 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    TemplateEngine templateEngine() {return new TemplateEngine();}
+    TemplateEngine templateEngine() {
+        return new TemplateEngine();
+    }
 }

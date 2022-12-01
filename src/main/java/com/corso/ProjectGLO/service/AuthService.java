@@ -65,4 +65,5 @@ public class AuthService {
         utente.setEnabled(true);
         utenteRepository.save(utente);
     }
+    
 }
