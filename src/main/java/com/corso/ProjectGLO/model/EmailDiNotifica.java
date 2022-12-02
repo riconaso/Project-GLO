@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class EmailDiNotifica {
 
     private String soggetto;

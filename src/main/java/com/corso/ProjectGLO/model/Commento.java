@@ -1,6 +1,7 @@
 package com.corso.ProjectGLO.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate;
@@ -14,6 +15,7 @@ import java.time.Instant;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "comments")
 public class Commento implements Serializable {
 

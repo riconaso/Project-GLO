@@ -3,18 +3,18 @@ package com.corso.ProjectGLO.controller;
 import com.corso.ProjectGLO.dto.RegisterRequest;
 import com.corso.ProjectGLO.service.AuthService;
 import lombok.AllArgsConstructor;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-
+@AllArgsConstructor
 @RequestMapping ("/api/auth")
 public class AuthController {
 
-    @Autowired
-   private  AuthService authService;
+   private final  AuthService authService;
 
    @PostMapping("/signUp")
     public ResponseEntity<String>signUp(@RequestBody RegisterRequest registerRequest){
