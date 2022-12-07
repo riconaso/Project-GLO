@@ -24,14 +24,14 @@ public abstract class PostMapper {
     private CommentoRepository commentoRepository;
 
     @Mapping(target ="dataCreazione", expression = "java(java.time.Instant.now())")
-    @Mapping(target="description", source = "postRequest.description")
-    @Mapping(target="subReddit", source = "subReddit")
-    @Mapping(target="voteCount",constant = "0")
+    @Mapping(target="descrizione", source = "postRequest.description")
+    @Mapping(target="subreddit", source = "subreddit")
+    @Mapping(target="contatoreVoti",constant = "0")
     @Mapping(target= "utente", source = "utente")
-    public abstract Post mapDTOToModel(PostRequest postRequest, SubReddit subReddit, Utente utente);
+    public abstract Post mapDTOToModel(PostRequest postRequest, SubReddit subreddit, Utente utente);
 
     @Mapping(target = "id", source = "postId")
-    @Mapping(target = "subRedditName", source = "subReddit.nome")
+    @Mapping(target = "subRedditName", source = "subreddit.nome")
     @Mapping(target = "username", source ="utente.username")
     @Mapping(target = "commentCount", expression = "java(commentCount(post))")
     @Mapping(target = "duration", expression = "java(getDuration(post))")
@@ -58,7 +58,7 @@ public abstract class PostMapper {
     private boolean checkVoteType(Post post, TipoVoto tipoVoto) {
         if (authService.isLoggedIn()) {
             Optional<Voto> voteForPostByUser =
-                    votoRepository.findTopByPostAndUserOrderByVoteIdDesc(post,
+                    votoRepository.findTopByPostAndUtenteOrderByIdVotoDesc(post,
                             authService.getCurrentUser());
             return voteForPostByUser.filter(voto -> voto.getTipovoto().equals(tipoVoto))
                     .isPresent();

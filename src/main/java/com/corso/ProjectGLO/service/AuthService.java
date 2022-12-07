@@ -1,6 +1,8 @@
 package com.corso.ProjectGLO.service;
 
+import com.corso.ProjectGLO.dto.AuthenticationResponse;
 import com.corso.ProjectGLO.dto.LoginRequest;
+import com.corso.ProjectGLO.dto.RefreshTokenRequest;
 import com.corso.ProjectGLO.dto.RegisterRequest;
 import com.corso.ProjectGLO.exception.ControllerNotFoundException;
 import com.corso.ProjectGLO.model.EmailDiNotifica;
@@ -8,6 +10,7 @@ import com.corso.ProjectGLO.model.Utente;
 import com.corso.ProjectGLO.model.VerificationToken;
 import com.corso.ProjectGLO.repository.UtenteRepository;
 import com.corso.ProjectGLO.repository.VerificationTokenRepository;
+import com.corso.ProjectGLO.security.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,6 +40,10 @@ public class AuthService {
     MailService mailService;
     @Autowired
     AuthenticationManager authenticationManager;
+    @Autowired
+    JwtProvider jwtProvider;
+    @Autowired
+    RefreshTokenService refreshTokenService;
 
     @Transactional
     public void signUp(RegisterRequest registerRequest) {
@@ -63,6 +70,8 @@ public class AuthService {
         verificationTokenRepository.save(verificationToken);
         return token;
     }
+
+
     @Transactional
     public void verificaAccount(String token) {
         Optional<VerificationToken> optional = verificationTokenRepository.findByToken(token);
@@ -77,11 +86,30 @@ public class AuthService {
         utenteRepository.save(utente);
     }
 
-    public void login(LoginRequest loginRequest) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
+    public AuthenticationResponse login(LoginRequest loginRequest) {
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+                loginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authenticate);
+        String token = jwtProvider.generateToken(authenticate);
+        return AuthenticationResponse.builder()
+                .authenticationToken(token)
+                .refreshToken(refreshTokenService.generateRefreshToken().getToken())
+                .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
+                .username(loginRequest.getUsername())
+                .build();
     }
+
+    public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
+        refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
+        String token = jwtProvider.generateTokenWithUsername(refreshTokenRequest.getUsername());
+        return AuthenticationResponse.builder()
+                .authenticationToken(token)
+                .refreshToken(refreshTokenRequest.getRefreshToken())
+                .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
+                .username(refreshTokenRequest.getUsername())
+                .build();
+    }
+
     @Transactional(readOnly = true)
     public Utente getCurrentUser() {
         Jwt principal = (Jwt) SecurityContextHolder.

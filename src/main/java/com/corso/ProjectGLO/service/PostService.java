@@ -34,7 +34,7 @@ public class PostService {
     private final PostMapper postMapper;
 
     public void save(PostRequest postRequest) {
-        SubReddit subreddit = subredditRepository.findByName(postRequest.getSubRedditName())
+        SubReddit subreddit = subredditRepository.findByNome(postRequest.getSubRedditName())
                 .orElseThrow(() -> new SubRedditException(postRequest.getSubRedditName()));
         postRepository.save(postMapper.mapDTOToModel(postRequest, subreddit, authService.getCurrentUser()));
     }
@@ -66,7 +66,7 @@ public class PostService {
     public List<PostResponse> getPostsByUsername(String username) {
         Utente utente = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
-        return postRepository.findByUser(utente)
+        return postRepository.findByUtente(utente)
                 .stream()
                 .map(postMapper::mapToDTO)
                 .collect(toList());

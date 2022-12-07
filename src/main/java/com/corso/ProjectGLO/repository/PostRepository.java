@@ -12,6 +12,6 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllBySubreddit(SubReddit subreddit);
 
-    List<Post> findByUser(Utente utente);
+    List<Post> findByUtente(Utente utente);
 
 }

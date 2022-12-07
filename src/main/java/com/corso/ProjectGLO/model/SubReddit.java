@@ -30,7 +30,7 @@ public class SubReddit implements Serializable {
     private Instant dataCreazione;
 
     @OneToMany
-    @JoinColumn(name= "Post_id")
+    @JoinColumn(name= "post_id")
     private List<Post> posts = new ArrayList<>();
 
     @ManyToOne
