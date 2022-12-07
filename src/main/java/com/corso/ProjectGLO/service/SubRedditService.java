@@ -1,6 +1,7 @@
 package com.corso.ProjectGLO.service;
 
 import com.corso.ProjectGLO.dto.SubRedditDTO;
+import com.corso.ProjectGLO.exception.SubRedditException;
 import com.corso.ProjectGLO.mapper.SubRedditMapper;
 import com.corso.ProjectGLO.model.SubReddit;
 import com.corso.ProjectGLO.repository.SubredditRepository;
@@ -31,12 +32,20 @@ public class SubRedditService {
 
     }
     @Transactional
-    public List<SubReddit> getAll(){
+    public List<SubRedditDTO> getAllSubReddit(){
         List<SubReddit> listaSubReddit = subredditRepository.findAll();
-        listaSubReddit.stream().map(subRedditMapper::mapSubRedditToDTO).collect(Collectors.toList());
-        return listaSubReddit;
+        return listaSubReddit.stream() //LO STREAM ITERA LA MAPPA SENZA CHE FACCIAMO NOI A MANO I CICLI
+                .map(subRedditMapper::mapSubRedditToDTO)
+                .collect(Collectors.toList());
 
     }
 
+    public SubRedditDTO getOneById(long id){
+
+        SubReddit subreddit = subredditRepository.findById(id).orElseThrow(()-> new SubRedditException
+                ("Sub Reddit con questo id non trovato: "+ id) );
+        return subRedditMapper.mapSubRedditToDTO(subreddit);
+
+    }
 
 }
