@@ -10,5 +10,8 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
+    List<Post> findAllBySubreddit(SubReddit subreddit);
+
+    List<Post> findByUser(Utente utente);
 
 }
