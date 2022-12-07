@@ -1,6 +1,7 @@
 package com.corso.ProjectGLO.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,11 +10,10 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentoDTO {
-    private Long id;
-    private Long postId;
-    private Instant creationDate;
-    private String testo;
+@Builder
+public class AuthenticationResponse {
+    private String authenticationToken;
+    private String refreshToken;
+    private Instant expiresAt;
     private String username;
-
 }

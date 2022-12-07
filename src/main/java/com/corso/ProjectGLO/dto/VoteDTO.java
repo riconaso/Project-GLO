@@ -1,19 +1,14 @@
 package com.corso.ProjectGLO.dto;
 
+import com.corso.ProjectGLO.model.TipoVoto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentoDTO {
-    private Long id;
+public class VoteDTO {
+    private TipoVoto tipoVoto;
     private Long postId;
-    private Instant creationDate;
-    private String testo;
-    private String username;
-
 }
