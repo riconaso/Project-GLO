@@ -1,5 +1,6 @@
 package com.corso.ProjectGLO.model;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +20,13 @@ public class Voto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",nullable = false)
-    private long idVoto;
+    private Long idVoto;
+    private TipoVoto Tipovoto;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "postId", referencedColumnName = "postId")
+    private Post post;
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    private Utente utente;
 }

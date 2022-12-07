@@ -27,4 +27,5 @@ public class VerificationToken implements Serializable {
     @JoinColumn(name = "Utente_Fk")
     private Utente utente;
 
+
 }

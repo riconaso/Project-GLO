@@ -1,6 +1,9 @@
 package com.corso.ProjectGLO.model;
 
+import com.corso.ProjectGLO.exception.SpringRedditException;
+
 import javax.persistence.Entity;
+import java.util.Arrays;
 
 
 public enum TipoVoto {
@@ -10,10 +13,16 @@ public enum TipoVoto {
     private int direction;
 
     private TipoVoto (int direction) {
-        this.direction = direction;
+
+    }
+    public static TipoVoto lookup(Integer direction) {
+        return Arrays.stream(TipoVoto.values())
+                .filter(value -> value.getDirection().equals(direction))
+                .findAny()
+                .orElseThrow(() -> new SpringRedditException("Vote not found"));
     }
 
-    public int getDirection() {
+    public Integer getDirection() {
         return direction;
     }
 }
