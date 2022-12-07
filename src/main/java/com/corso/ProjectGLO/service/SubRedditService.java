@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @Slf4j
 public class SubRedditService {
@@ -31,12 +33,20 @@ public class SubRedditService {
         return subRedditDTO;
 
     }
+
+    @Transactional(readOnly = true)
+    public List<SubRedditDTO> getAll() {
+        return subredditRepository.findAll()
+                .stream()
+                .map(subRedditMapper::mapSubRedditToDTO)
+                .collect(toList());
+    }
     @Transactional
     public List<SubRedditDTO> getAllSubReddit(){
         List<SubReddit> listaSubReddit = subredditRepository.findAll();
         return listaSubReddit.stream() //LO STREAM ITERA LA MAPPA SENZA CHE FACCIAMO NOI A MANO I CICLI
                 .map(subRedditMapper::mapSubRedditToDTO)
-                .collect(Collectors.toList());
+                .collect(toList());
 
     }
 

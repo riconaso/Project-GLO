@@ -24,9 +24,9 @@ public class Voto implements Serializable {
     private TipoVoto Tipovoto;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "postId", referencedColumnName = "postId")
+    @JoinColumn(name = "postId", referencedColumnName = "post_Id")
     private Post post;
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "id_user")
     private Utente utente;
 }

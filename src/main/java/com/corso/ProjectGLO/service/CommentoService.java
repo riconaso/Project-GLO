@@ -8,7 +8,7 @@ import com.corso.ProjectGLO.model.Commento;
 import com.corso.ProjectGLO.model.EmailDiNotifica;
 import com.corso.ProjectGLO.model.Post;
 import com.corso.ProjectGLO.model.Utente;
-import com.corso.ProjectGLO.repository.CommentoRepository;
+import com.corso.ProjectGLO.repository.*;
 import com.corso.ProjectGLO.repository.PostRepository;
 import com.corso.ProjectGLO.repository.UtenteRepository;
 import lombok.AllArgsConstructor;
@@ -58,7 +58,7 @@ public class CommentoService {
     public List<CommentoDTO> getAllCommentsForUser(String userName) {
         Utente user = utenteRepository.findByUsername(userName)
                 .orElseThrow(() -> new UsernameNotFoundException(userName));
-        return commentoRepository.findAllByUser(user)
+        return commentoRepository.findAllByUtente(user)
                 .stream()
                 .map(commentMapper::mapToDto)
                 .collect(toList());

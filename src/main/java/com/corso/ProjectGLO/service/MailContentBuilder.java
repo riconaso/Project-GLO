@@ -1,6 +1,7 @@
 package com.corso.ProjectGLO.service;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.JdbcProperties;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,14 @@ import org.thymeleaf.context.Context;
 @AllArgsConstructor
 public class MailContentBuilder {
 
-    private final TemplateEngine templateEngine;
-
-    public String build(String message){
-        Context context = new Context();
-        context.setVariable("message",message);
-        return templateEngine.process("mailTemplate", context);
+    private final TemplateEngine templateEngine() {
+        TemplateEngine templateEngine = new TemplateEngine();
+        return templateEngine;
     }
 
+    public String build(String message) {
+        Context context = new Context();
+        context.setVariable("message", message);
+        return templateEngine().process("MailTemplate", context);
+    }
 }
