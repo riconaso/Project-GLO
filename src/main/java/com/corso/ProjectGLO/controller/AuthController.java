@@ -26,4 +26,7 @@ public class AuthController {
        authService.verificaAccount(token);
        return new ResponseEntity<>("Account verificato con successo", HttpStatus.OK);
     }
+
+
+
 }
